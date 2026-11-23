@@ -94,9 +94,26 @@ app.get("/api/animals", (req, res) => {
 	res.json(animals);
 });
 
-// TODO 2: GET /api/animals/:id sends one animal, or a 404.
+// Register the fixed filter paths before the variable :id route.
+app.get(["/api/animals/available", "/api/available-animals"], (req, res) => {
+	res.json(animals.filter((animal) => !animal.adopted));
+});
 
-// TODO 3: GET /api/available-animals and GET /api/adopted-animals
+app.get(["/api/animals/adopted", "/api/adopted-animals"], (req, res) => {
+	res.json(animals.filter((animal) => animal.adopted));
+});
+
+app.get("/api/animals/:id", (req, res) => {
+	const id = Number(req.params.id);
+	const animal = animals.find((animal) => animal.id === id);
+
+	if (!animal || String(id) !== req.params.id) {
+		return res.status(404).json({ error: "Animal not found" });
+	}
+
+	res.json(animal);
+});
+
 
 // ------------------------------------
 // Start the Server
