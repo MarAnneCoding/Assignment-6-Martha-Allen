@@ -2,8 +2,7 @@
 /*
  * Animal Adoption Board
  *
- * This is a completed version of Assignment 5. In Assignment 6 you change
- * only the places marked TODO 4.
+ * Loads animal data from the Express API.
  */
 
 import { ref, computed } from "vue";
@@ -29,8 +28,7 @@ async function loadAnimals() {
 	error.value = "";
 
 	try {
-		// TODO 4: Load the animals from your API instead of the JSON file.
-		const response = await fetch("/animals.json");
+		const response = await fetch("/api/animals");
 
 		// A 404 or 500 still comes back as a response, so check it.
 		if (!response.ok) {
